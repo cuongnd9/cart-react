@@ -1,14 +1,10 @@
 import React from "react";
 import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink
+  Collapse, Navbar, NavbarToggler, Nav, NavItem
 } from "reactstrap";
 import { Link } from "react-router-dom";
+
+import { CartContext } from '../contexts/Cart';
 
 export default class TopMenu extends React.Component {
   constructor(props) {
@@ -28,20 +24,23 @@ export default class TopMenu extends React.Component {
     return (
       <div>
         <Navbar color="light" light expand="md">
-          <NavbarBrand href="/">react-practice</NavbarBrand>
+          <Link className='navbar-brand' to='/'>React</Link>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink>
-                  <Link to="/">Home</Link>
-                </NavLink>
+                <Link className='nav-link' to="/">Home</Link>
               </NavItem>
               <NavItem>
-                <NavLink>
-                  <Link to="/products">Products</Link>
-                </NavLink>
+                <Link className='nav-link' to="/products">Products</Link>
               </NavItem>
+              <CartContext.Consumer>
+                {
+                  ({cartItems}) => <NavItem>
+                    <Link className='nav-link text-danger' to="/products">{`Cart(${cartItems.length})`}</Link>
+                  </NavItem>
+                }
+              </CartContext.Consumer>
             </Nav>
           </Collapse>
         </Navbar>

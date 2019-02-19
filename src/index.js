@@ -1,23 +1,27 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import { Container } from 'reactstrap';
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
+
+import CartProvider from './contexts/Cart';
+
 import TopMenu from "./components/TopMenu";
 import Products from "./pages/Products";
 
-const Index = () => <h2 className="text-primary">Index</h2>
+const Home = () => <h3 className="text-primary">Home</h3>
 
 function App() {
   return (
-    <Router>
-      <Container fluid="true">
-        <TopMenu />
-        <Route path="/" exact component={Index} />
-        <Route path="/products" component={Products} />
-      </Container>
-    </Router>
+    <CartProvider>
+      <Router>
+        <div>
+          <TopMenu />
+          <Route path="/" exact component={Home} />
+          <Route path="/products" component={Products} />
+        </div>
+      </Router>
+    </CartProvider>
   );
 }
 
